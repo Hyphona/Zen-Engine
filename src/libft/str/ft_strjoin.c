@@ -5,17 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 12:55:43 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/13 15:20:13 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 12:39:33 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 12:39:34 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 
-/**
- * The static method that actually join s1 and s2
- */
-static char	*join(char const *s, char const *s1, char const *s2)
+static char	*ft_join(char *str, const char *s1, const char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -24,34 +23,36 @@ static char	*join(char const *s, char const *s1, char const *s2)
 	j = 0;
 	while (s1[i])
 	{
-		s[j] = s1[i];
-		j++;
+		str[j] = s1[i];
 		i++;
+		j++;
 	}
 	i = 0;
 	while (s2[i])
 	{
-		s[j] = s2[i];
-		j++;
+		str[j] = s2[i];
 		i++;
+		j++;
 	}
-	return (s);
+	return (str);
 }
 
 /**
- * Join the string s1 and s2
+ * Join two strings
  *
- * On success, the joined string s is returned
- * On error, NULL is returned
+ * @param s1 First string to join
+ * @param s2 Second string to join
+ * @returns On success, a pointer to the joined string
+ * @returns On error, NULL
  */
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*s;
+	char	*str;
 
 	if (!s1 || !s2)
 		return (NULL);
-	s = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!s)
+	str = calloc(sizeof(char), strlen(s1) + strlen(s2) + 1);
+	if (!str)
 		return (NULL);
-	return (join(s, s1, s2));
+	return (ft_join(str, s1, s2));
 }

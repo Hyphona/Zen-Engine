@@ -5,24 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 10:42:28 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/13 15:51:50 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 12:39:21 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 12:43:16 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "zen.h"
+#include "zen_engine.h"
 
-static ssize_t	check_params(size_t w, size_t h, char *t)
+static size_t	check(size_t w, size_t h, char *t)
 {
 	if (!w)
 	{
 		zen_log(2, "zen_init(w, ..., ...): Missing width parameter");
-		return (-1);
+		return (0);
 	}
 	if (!h)
 	{
 		zen_log(2, "zen_init(..., h, ...): Missing height parameter");
-		return (-1);
+		return (0);
 	}
 	if (!t)
 		zen_log(1, "zen_init(..., ..., t): Missing title parameter");
@@ -33,9 +33,16 @@ t_zen	*zen_init(size_t w, size_t h, char *t, size_t fs)
 {
 	t_zen	*zen;
 
-	if (!check_params(w, h, t))
+	if (!check(w, h, t))
 	{
 		zen_log(2, "Can't init Zen Engine!");
 		return (NULL);
 	}
+	zen = malloc(sizeof(t_zen));
+	if (!zen)
+	{
+		zen_log(2, "Failed to malloc t_zen struct");
+		return (NULL);
+	}
+	return (zen);
 }

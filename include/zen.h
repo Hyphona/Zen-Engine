@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 10:52:53 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/13 15:46:24 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 12:44:18 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define ZEN_H
 
 # include <GLFW/glfw3.h>
-# include <glad/glad.h> 
+# include <glad/glad.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct zen_s
 {
@@ -22,7 +24,6 @@ typedef struct zen_s
 
 }				t_zen;
 
-ssize_t	zen_log(size_t mode, char *msg);
-ssize_t	game_log(size_t mode, char *msg);
+size_t	game_log(size_t mode, char *msg);
 
 #endif

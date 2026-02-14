@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   zen_engine.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 12:47:27 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/13 12:49:59 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 12:44:25 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef ZEN_ENGINE_H
+# define ZEN_ENGINE_H
 
-/**
- * Fills the first n bytes of the memory area s with null characters
- */
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, '\0', n);
-}
+# include "zen.h"
+# include <string.h>
+
+char	*ft_strjoin(const char *s1, const char *s2);
+size_t	zen_log(size_t mode, char *msg);
+
+#endif
