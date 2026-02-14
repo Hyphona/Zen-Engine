@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zen.h                                              :+:      :+:    :+:   */
+/*   destroy_window.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/14 14:10:15 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 13:41:28 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 13:48:17 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZEN_H
-# define ZEN_H
+#include "zen_engine.h"
 
-# include <glad/glad.h>
-# include <GLFW/glfw3.h>
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct zen_s
+size_t	destroy_window(t_zen *zen)
 {
-	GLFWwindow	*window;
-
-}				t_zen;
-
-size_t	game_log(size_t mode, char *msg);
-size_t	zen_terminate(t_zen *zen);
-
-#endif
+	if (!zen)
+	{
+		zen_log(2, "destroy_window() - t_zen struct is NULL");
+		return (0);
+	}
+	if (!zen->window)
+	{
+		zen_log(1, "destroy_window() - No window to destroy");
+		return (1);
+	}
+	glfwDestroyWindow(zen->window);
+	return (1);
+}

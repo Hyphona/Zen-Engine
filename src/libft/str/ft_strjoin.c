@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:39:33 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/14 12:39:34 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/14 14:13:35 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = calloc(sizeof(char), strlen(s1) + strlen(s2) + 1);
+	str = calloc(strlen(s1) + strlen(s2) + 1, sizeof(char));
 	if (!str)
 		return (NULL);
 	return (ft_join(str, s1, s2));

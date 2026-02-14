@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zen.h                                              :+:      :+:    :+:   */
+/*   terminate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/14 14:10:15 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 13:49:30 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 13:57:43 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZEN_H
-# define ZEN_H
+#include "zen_engine.h"
 
-# include <glad/glad.h>
-# include <GLFW/glfw3.h>
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct zen_s
+size_t	zen_terminate(t_zen *zen)
 {
-	GLFWwindow	*window;
-
-}				t_zen;
-
-size_t	game_log(size_t mode, char *msg);
-size_t	zen_terminate(t_zen *zen);
-
-#endif
+	if (!zen)
+	{
+		zen_log(2, "zen_terminate() - t_zen struct is NULL");
+		return (1);
+	}
+	destroy_window(zen);
+	free(zen);
+	return (1);
+}

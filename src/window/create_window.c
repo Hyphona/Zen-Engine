@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zen.h                                              :+:      :+:    :+:   */
+/*   create_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/14 14:10:15 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 13:19:26 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/14 13:32:10 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZEN_H
-# define ZEN_H
+#include "zen_engine.h"
 
-# include <glad/glad.h>
-# include <GLFW/glfw3.h>
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct zen_s
+GLFWwindow	*create_window(size_t w, size_t h, char *t, size_t fs)
 {
 	GLFWwindow	*window;
 
-}				t_zen;
-
-size_t	game_log(size_t mode, char *msg);
-size_t	zen_terminate(t_zen *zen);
-
-#endif
+	if (!fs)
+	{
+		window = glfwCreateWindow(w, h, t, NULL, NULL);
+		return (window);
+	}
+	window = glfwCreateWindow(w, h, t, glfwGetPrimaryMonitor(), NULL);
+	return (window);
+}
