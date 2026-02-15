@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:49:30 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 21:03:40 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:15:56 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	zen_terminate(t_zen *zen)
 	if (!zen)
 	{
 		zen_log(1, "zen_terminate(): t_zen struct is NULL");
-		return (void);
+		return ;
 	}
 	destroy_window(zen->window);
 	free(zen);
