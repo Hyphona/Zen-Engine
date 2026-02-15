@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:39:21 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 20:59:01 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/16 00:49:43 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static size_t	check_params(size_t w, size_t h, char *t)
  * Init GLFW
  *
  * @returns 1 on success, 0 if it fails
+ *
+ * We can add this to make it works on MacOS:
+ *	- glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
  */
 static size_t	init_glfw(void)
 {
@@ -49,8 +52,8 @@ static size_t	init_glfw(void)
 		return (0);
 	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	return (1);
 }
 

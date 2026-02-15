@@ -6,11 +6,20 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:19:26 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 21:04:26 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/16 00:54:23 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen_engine.h"
+
+/**
+ * Adjust the viewport when the user resize the window
+ */
+void	framebuffer_size_callback(GLFWwindow *window, int w, int h)
+{
+	(void) window;
+	glViewport(0, 0, w, h);
+}
 
 /**
  * Create a window and init GLAD, if anything fails GLFW will be terminated
@@ -24,7 +33,7 @@
  *
  * @return A GLFWwindow object on success, NULL if it fails
  */
-GLFWwindow	*create_window(size_t w, size_t h, char *t, size_t fs)
+GLFWwindow	*create_window(int w, int h, char *t, size_t fs)
 {
 	GLFWwindow	*window;
 
@@ -41,11 +50,12 @@ GLFWwindow	*create_window(size_t w, size_t h, char *t, size_t fs)
 	glfwMakeContextCurrent(window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-    	zen_log(2, "create_window(): Failed to init GLAD");
+		zen_log(2, "create_window(): Failed to init GLAD");
 		destroy_window(window);
 		glfwTerminate();
-    	return (NULL);
+		return (NULL);
 	}
 	glViewport(0, 0, w, h);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	return (window);
 }

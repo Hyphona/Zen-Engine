@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zen_loop.c                                         :+:      :+:    :+:   */
+/*   close_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 15:38:47 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 00:53:04 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/16 00:31:50 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/16 00:51:34 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen_engine.h"
 
-size_t	zen_loop(t_zen *zen)
+/**
+ * Tell the window that it should close when the close key is pressed
+ *
+ * @param zen The t_zen struct
+ */
+void	process_close_input(t_zen *zen)
 {
-	if (!zen)
-	{
-		zen_log(2, "zen_loop(): t_zen struct is NULL");
-		return (0);
-	}
-	while (!glfwWindowShouldClose(zen->window))
-	{
-		process_close_input(zen);
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwSwapBuffers(zen->window);
-		glfwPollEvents();
-	}
-	return (1);
+	if (glfwGetKey(zen->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(zen->window, true);
 }
