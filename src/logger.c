@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:39:00 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/14 13:06:05 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/15 13:15:49 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static size_t	to_console(const char *prefix, const char *msg)
 	char	*s;
 
 	if (!msg)
-		s = ft_strjoin(prefix, "[No log message provided]");
+		s = ft_strjoin(prefix, "[No log message provided]\n");
 	else
 		s = ft_strjoin(prefix, msg);
 	if (!s)
 	{
-		write(0, "logger.c -> ft_strjoin() error", 30);
+		write(0, "logger.c -> ft_strjoin() error\n", 31);
 		return (0);
 	}
 	i = write(0, s, strlen(s));
@@ -50,9 +50,9 @@ size_t	zen_log(size_t mode, char *msg)
 		return (to_console("ZEN ENGINE->W ", msg));
 	else if (mode == 2)
 		return (to_console("ZEN ENGINE->E ", msg));
-	to_console("ZEN ENGINE->W ", "zen_log() - Unknow mode");
-	to_console("ZEN ENGINE->W ", "Modes: info (0), warning (1), error (2)");
-	to_console("ZEN ENGINE->W ", "Fallback to warning (1)");
+	to_console("ZEN ENGINE->W ", "zen_log() - Unknow mode\n");
+	to_console("ZEN ENGINE->W ", "Modes: info (0), warning (1), error (2)\n");
+	to_console("ZEN ENGINE->W ", "Fallback to warning (1)\n");
 	return (to_console("ZEN ENGINE->W ", msg));
 }
 
@@ -72,8 +72,8 @@ size_t	game_log(size_t mode, char *msg)
 		return (to_console("GAME->W: ", msg));
 	else if (mode == 2)
 		return (to_console("GAME->E: ", msg));
-	to_console("GAME->W: ", "game_log() - Unknow mode");
-	to_console("GAME->W: ", "Modes: info (0), warning (1), error (2)");
-	to_console("GAME->W: ", "Fallback to warning (1)");
+	to_console("GAME->W: ", "game_log() - Unknow mode\n");
+	to_console("GAME->W: ", "Modes: info (0), warning (1), error (2)\n");
+	to_console("GAME->W: ", "Fallback to warning (1)\n");
 	return (to_console("GAME->W: ", msg));
 }
