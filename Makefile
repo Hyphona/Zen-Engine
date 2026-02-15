@@ -12,14 +12,15 @@ all: $(NAME) clean
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "[Zen Engine] Compiling: $(notdir $<)\n"
 
 $(NAME): $(OBJS)
-	@ar -rcs $(NAME) $(OBJS)
+	@mkdir ./build
+	@ar -rcs ./build/$(NAME) $(OBJS)
 
 clean:
 	@rm -f $(OBJS)
 	@printf "[Zen Engine] Cleaned .o files\n"
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f ./build/$(NAME)
 	@printf "[Zen Engine] Deleted $(NAME)\n"
 
 re: fclean all
