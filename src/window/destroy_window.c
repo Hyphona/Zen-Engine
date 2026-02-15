@@ -6,24 +6,29 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:41:28 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 14:32:04 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:03:16 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen_engine.h"
 
-size_t	destroy_window(t_zen *zen)
+/**
+ * Destroy a window
+ *
+ * Issue a warning in the console if window is NULL
+ * The window was likely already destroyed
+ *
+ * @param window The window to destroy
+ *
+ * @return 1 on success, 0 if the window was NULL
+ */
+size_t	destroy_window(GLFWwindow *window)
 {
-	if (!zen)
+	if (!window)
 	{
-		zen_log(2, "destroy_window() - t_zen struct is NULL");
+		zen_log(1, "destroy_window(): window is NULL");
 		return (0);
 	}
-	if (!zen->window)
-	{
-		zen_log(1, "destroy_window() - No window to destroy");
-		return (1);
-	}
-	glfwDestroyWindow(zen->window);
+	glfwDestroyWindow(window);
 	return (1);
 }

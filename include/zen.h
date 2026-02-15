@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 12:36:06 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:06:28 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,42 @@ typedef struct zen_s
 
 }				t_zen;
 
+/**
+ * Game logging method
+ *
+ * @param mode info (0), warning (1), error (2)
+ * @param msg The message to log
+ * @returns On success, the number of bytes written
+ * @returns On error, 0
+ */
 size_t	game_log(size_t mode, char *msg);
+
+/**
+ * Init the Zen Engine
+ *
+ * @param w The window width (in pixel)
+ * @param h The window height (in pixel)
+ * @param t The window title
+ * @param fs If the window should be fullscreen or not
+ *	- 0 Not in fullscreen
+ *	- 1 In fullscreen
+ *
+ * @returns A t_zen object on success, NULL if it fails
+ */
 t_zen	*zen_init(size_t w, size_t h, char *t, size_t fs);
-size_t	zen_terminate(t_zen *zen);
+
+/**
+ * Working on it
+ */
+size_t	zen_loop(t_zen *zen);
+
+/**
+ * Terminate Zen Engine
+ *
+ * Issue a warning in the console if t_zen is NULL
+ *
+ * @param zen A t_zen object
+ */
+void	zen_terminate(t_zen *zen);
 
 #endif

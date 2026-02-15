@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminate.c                                        :+:      :+:    :+:   */
+/*   zen_loop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/14 13:49:30 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 21:03:40 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/15 15:38:47 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/15 15:52:17 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen_engine.h"
 
-/**
- * Terminate Zen Engine
- *
- * Issue a warning in the console if t_zen is NULL
- *
- * @param zen A t_zen object
- */
-void	zen_terminate(t_zen *zen)
+size_t	zen_loop(t_zen *zen)
 {
 	if (!zen)
 	{
-		zen_log(1, "zen_terminate(): t_zen struct is NULL");
-		return (void);
+		zen_log(2, "zen_loop(): t_zen struct is NULL");
+		return (0);
 	}
-	destroy_window(zen->window);
-	free(zen);
-	glfwTerminate();
+	while(!glfwWindowShouldClose(zen->window))
+	{
+    	glfwSwapBuffers(zen->window);
+    	glfwPollEvents();    
+	}
+	return (1);
 }
