@@ -6,11 +6,11 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:41:28 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/15 21:03:16 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/16 01:23:48 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "zen_engine.h"
+#include "zen/zen_engine.h"
 
 /**
  * Destroy a window

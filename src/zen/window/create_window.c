@@ -6,11 +6,11 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:19:26 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 00:54:23 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/16 01:23:43 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "zen_engine.h"
+#include "zen/zen_engine.h"
 
 /**
  * Adjust the viewport when the user resize the window

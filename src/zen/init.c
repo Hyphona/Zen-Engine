@@ -6,11 +6,11 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:39:21 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 00:49:43 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/16 01:23:18 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "zen_engine.h"
+#include "zen/zen_engine.h"
 
 /**
  * Check the zen_init() method parameters
