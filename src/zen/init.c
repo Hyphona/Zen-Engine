@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:39:21 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 01:23:18 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/17 12:32:37 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
  *
  * @returns 1 on success, 0 if it fails
  */
-static size_t	check_params(size_t w, size_t h, char *t)
+static size_t	check_params(int width, int height, char *title)
 {
-	if (!w || !h || !t)
+	if (!width || !height || !title)
 	{
-		if (!w)
+		if (!width)
 			zen_log(2, "zen_init(): Missing width parameter");
-		else if (!h)
+		else if (!height)
 			zen_log(2, "zen_init(): Missing height parameter");
 		else
 			zen_log(2, "zen_init(): Missing title parameter");
@@ -60,20 +60,20 @@ static size_t	init_glfw(void)
 /**
  * Init the Zen Engine
  *
- * @param w The window width (in pixel)
- * @param h The window height (in pixel)
- * @param t The window title
- * @param fs If the window should be fullscreen or not
+ * @param width The window width (in pixel)
+ * @param height The window height (in pixel)
+ * @param title The window title
+ * @param f_screen If the window should be fullscreen or not
  *	- 0 Not in fullscreen
  *	- 1 In fullscreen
  *
  * @returns A t_zen object on success, NULL if it fails
  */
-t_zen	*zen_init(size_t w, size_t h, char *t, size_t fs)
+t_zen	*zen_init(int width, int height, char *title, int f_screen)
 {
 	t_zen	*zen;
 
-	if (!check_params(w, h, t))
+	if (!check_params(width, height, title))
 		return (NULL);
 	zen = malloc(sizeof(t_zen));
 	if (!zen)
@@ -86,7 +86,7 @@ t_zen	*zen_init(size_t w, size_t h, char *t, size_t fs)
 		free(zen);
 		return (NULL);
 	}
-	zen->window = create_window(w, h, t, fs);
+	zen->window = create_window(width, height, title, f_screen);
 	if (!zen->window)
 	{
 		free(zen);

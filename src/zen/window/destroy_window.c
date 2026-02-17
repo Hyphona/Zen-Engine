@@ -6,14 +6,14 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:41:28 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 01:23:48 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/17 12:38:43 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen/zen_engine.h"
 
 /**
- * Destroy a window
+ * Destroy a window and terminate GLFW
  *
  * Issue a warning in the console if window is NULL
  * The window was likely already destroyed
@@ -22,13 +22,14 @@
  *
  * @return 1 on success, 0 if the window was NULL
  */
-size_t	destroy_window(GLFWwindow *window)
+void	destroy_window(GLFWwindow *window)
 {
 	if (!window)
 	{
 		zen_log(1, "destroy_window(): window is NULL");
-		return (0);
+		glfwTerminate();
+		return ;
 	}
 	glfwDestroyWindow(window);
-	return (1);
+	glfwTerminate();
 }

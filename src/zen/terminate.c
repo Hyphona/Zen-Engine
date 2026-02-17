@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:49:30 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 01:23:32 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/17 12:26:56 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,4 @@ void	zen_terminate(t_zen *zen)
 	}
 	destroy_window(zen->window);
 	free(zen);
-	glfwTerminate();
 }

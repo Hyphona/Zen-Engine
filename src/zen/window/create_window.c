@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:19:26 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 01:23:43 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/17 12:38:14 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ void	framebuffer_size_callback(GLFWwindow *window, int w, int h)
  * @param w The window width (in pixel)
  * @param h The window height (in pixel)
  * @param t The window title
- * @param fs If the window should be fullscreen or not
+ * @param f_screen If the window should be fullscreen or not
  *	- 0 Not in fullscreen
  *	- 1 In fullscreen
  *
  * @return A GLFWwindow object on success, NULL if it fails
  */
-GLFWwindow	*create_window(int w, int h, char *t, size_t fs)
+GLFWwindow	*create_window(int w, int h, char *t, int f_screen)
 {
 	GLFWwindow	*window;
 
-	if (!fs)
+	if (!f_screen)
 		window = glfwCreateWindow(w, h, t, NULL, NULL);
 	else
 		window = glfwCreateWindow(w, h, t, glfwGetPrimaryMonitor(), NULL);
@@ -52,10 +52,9 @@ GLFWwindow	*create_window(int w, int h, char *t, size_t fs)
 	{
 		zen_log(2, "create_window(): Failed to init GLAD");
 		destroy_window(window);
-		glfwTerminate();
 		return (NULL);
 	}
-	glViewport(0, 0, w, h);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glViewport(0, 0, w, h);
 	return (window);
 }
