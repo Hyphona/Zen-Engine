@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:39:21 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/17 12:32:37 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/18 00:48:24 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static size_t	check_params(int width, int height, char *title)
 	if (!width || !height || !title)
 	{
 		if (!width)
-			zen_log(2, "zen_init(): Missing width parameter");
+			zen_log(0, 2, "zen_init(): Missing width parameter");
 		else if (!height)
-			zen_log(2, "zen_init(): Missing height parameter");
+			zen_log(0, 2, "zen_init(): Missing height parameter");
 		else
-			zen_log(2, "zen_init(): Missing title parameter");
+			zen_log(0, 2, "zen_init(): Missing title parameter");
 		return (0);
 	}
 	return (1);
@@ -48,7 +48,7 @@ static size_t	init_glfw(void)
 {
 	if (glfwInit() == GL_FALSE)
 	{
-		zen_log(2, "init_glfw(): Failed");
+		zen_log(0, 2, "init_glfw(): Failed");
 		return (0);
 	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -78,7 +78,7 @@ t_zen	*zen_init(int width, int height, char *title, int f_screen)
 	zen = malloc(sizeof(t_zen));
 	if (!zen)
 	{
-		zen_log(2, "zen_init(): Failed to malloc t_zen struct");
+		zen_log(0, 2, "zen_init(): Failed to malloc t_zen struct");
 		return (NULL);
 	}
 	if (!init_glfw())

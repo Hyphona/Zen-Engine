@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/17 12:33:00 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/18 02:30:25 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <glad/glad.h>
 # include <GLFW/glfw3.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -25,14 +26,14 @@ typedef struct zen_s
 }				t_zen;
 
 /**
- * Game logging method
+ * Log a message to the console / zen_engine_logs.txt
  *
- * @param mode info (0), warning (1), error (2)
- * @param msg The message to log
- * @returns On success, the number of bytes written
- * @returns On error, 0
+ * @param is_game If the log message comes from the game
+ * @param log_level The log level - (0) INFO - (1) WARNING - (2) ERROR
+ * @param log_msg The log message
+ * @return The number of bytes written
  */
-size_t	game_log(size_t mode, char *msg);
+size_t	zen_log(size_t is_game, size_t log_level, const char *log_msg);
 
 /**
  * Init the Zen Engine

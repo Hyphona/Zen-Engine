@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/17 12:39:43 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/18 00:36:57 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "zen/zen.h"
 # include <string.h>
 
+char		*build_log_line(size_t from, size_t log_level, const char *msg);
 GLFWwindow	*create_window(int w, int h, char *t, int f_screen);
 void		destroy_window(GLFWwindow *window);
 char		*ft_strjoin(const char *s1, const char *s2);
 void		process_close_input(t_zen *zen);
-size_t		zen_log(size_t mode, char *msg);
 
 #endif

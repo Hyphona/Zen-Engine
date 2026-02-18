@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:19:26 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/17 12:55:23 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/18 00:48:40 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ GLFWwindow	*create_window(int w, int h, char *t, int f_screen)
 		window = glfwCreateWindow(w, h, t, glfwGetPrimaryMonitor(), NULL);
 	if (!window)
 	{
-		zen_log(2, "create_window(): Failed");
+		zen_log(0, 2, "create_window(): Failed");
 		glfwTerminate();
 		return (NULL);
 	}
 	glfwMakeContextCurrent(window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		zen_log(2, "create_window(): Failed to init GLAD");
+		zen_log(0, 2, "create_window(): Failed to init GLAD");
 		destroy_window(window);
 		return (NULL);
 	}
