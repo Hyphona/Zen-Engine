@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:49:30 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/18 00:50:10 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/19 19:49:27 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 /**
  * Terminate Zen Engine
  *
- * Issue a warning in the console if t_zen is NULL
- *
- * @param zen A t_zen object
+ * @param zen The Zen Engine structure
  */
 void	zen_terminate(t_zen *zen)
 {
 	if (!zen)
-		zen_log(0, 1, "zen_terminate(): t_zen struct is NULL");
-	else
+		write(0, "zen_terminate() Null 'zen' pointer\n", 35);
+	if (zen->window)
 		destroy_window(zen->window);
+	terminate_logger();
 	free(zen);
 }

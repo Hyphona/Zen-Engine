@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:40:59 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/18 02:30:25 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/19 20:37:13 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,38 @@
 
 typedef struct zen_s
 {
-	GLFWwindow	*window;
+	GLFWwindow		*window;
+}					t_zen;
 
-}				t_zen;
+/**
+ * Init Zen Engine
+ *
+ * @returns A pointer to the t_zen structure
+ * @returns An empty pointer if it fails
+ */
+t_zen	*init_zen(void);
 
 /**
  * Log a message to the console / zen_engine_logs.txt
  *
- * @param is_game If the log message comes from the game
  * @param log_level The log level - (0) INFO - (1) WARNING - (2) ERROR
- * @param log_msg The log message
- * @return The number of bytes written
+ * @param msg The log message
  */
-size_t	zen_log(size_t is_game, size_t log_level, const char *log_msg);
+void	zen_log(size_t log_level, const char *msg);
 
 /**
- * Init the Zen Engine
+ * Create a window
  *
- * @param width The window width (in pixel)
- * @param height The window height (in pixel)
- * @param title The window title
+ * @param w The window width (in pixel)
+ * @param h The window height (in pixel)
+ * @param t The window title
  * @param f_screen If the window should be fullscreen or not
  *	- 0 Not in fullscreen
  *	- 1 In fullscreen
  *
- * @returns A t_zen object on success, NULL if it fails
+ * @return A GLFWwindow object on success, NULL if it fails
  */
-t_zen	*zen_init(int width, int height, char *title, int f_screen);
+GLFWwindow	*create_window(int w, int h, char *t, int f_screen);
 
 /**
  * Working on it
@@ -56,8 +61,6 @@ size_t	zen_loop(t_zen *zen);
 
 /**
  * Terminate Zen Engine
- *
- * Issue a warning in the console if t_zen is NULL
  *
  * @param zen A t_zen object
  */

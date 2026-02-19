@@ -1,5 +1,5 @@
 NAME	:= zen_engine.a
-CFLAGS	:= -Wall -Werror -Wextra
+CFLAGS	:= -Wall -Werror -Wextra -g
 
 HEADERS	:= -I ./include
 

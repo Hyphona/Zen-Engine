@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:41:28 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/18 02:32:11 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/19 00:48:58 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
  */
 void	destroy_window(GLFWwindow *window)
 {
-	if (!window)
-		zen_log(0, 1, "destroy_window(): window is NULL");
-	else
-		glfwDestroyWindow(window);
+	glfwDestroyWindow(window);
 	glfwTerminate();
 }

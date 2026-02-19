@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zen_loop.c                                         :+:      :+:    :+:   */
+/*   init_zen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 15:38:47 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/19 13:25:10 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/19 00:35:44 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/19 13:43:27 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen/zen_engine.h"
 
-size_t	zen_loop(t_zen *zen)
+/**
+ * Init Zen Engine
+ *
+ * @returns A pointer to the t_zen structure
+ * @returns An empty pointer if it fails
+ */
+t_zen	*init_zen(void)
 {
+	t_zen	*zen;
+
+	zen = malloc(sizeof(t_zen));
 	if (!zen)
 	{
-		zen_log(2, "zen_loop() t_zen struct is NULL");
-		return (0);
+		write(0, "init_zen(): Couldn't init Zen Engine\n", 37);
+		return (NULL);
 	}
-	while (!glfwWindowShouldClose(zen->window))
-	{
-		process_close_input(zen);
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwSwapBuffers(zen->window);
-		glfwPollEvents();
-	}
-	return (1);
+	zen->window = NULL;
+	return (zen);
 }
