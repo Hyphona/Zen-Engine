@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/19 20:51:11 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 00:41:13 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct log_node_s
 typedef struct logger_s
 {
 	pthread_mutex_t		mutex;
-	pthread_t			thread_id;
+	pthread_t			t_id;
 	struct log_node_s	*head;
 	_Atomic int			stop_flag;
 }						t_logger;

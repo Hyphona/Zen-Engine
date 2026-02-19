@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:07:45 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/19 21:13:56 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 00:41:02 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_logger	*g_logger;
  */
 static int	init_logger(void)
 {
-	int	thread;
+	int	t;
 
 	if (g_logger)
 	{
@@ -39,9 +39,8 @@ static int	init_logger(void)
 	pthread_mutex_init(&g_logger->mutex, NULL);
 	g_logger->head = NULL;
 	g_logger->stop_flag = 0;
-	thread = pthread_create(&g_logger->thread_id, NULL, logger_worker,\
-		 (void *) g_logger);
-	if (thread != 0)
+	t = pthread_create(&g_logger->t_id, NULL, logger_worker, (void *) g_logger);
+	if (t != 0)
 		return (0);
 	return (1);
 }
@@ -54,7 +53,7 @@ void	terminate_logger(void)
 	if (!g_logger)
 		return ;
 	g_logger->stop_flag = 1;
-	pthread_join(g_logger->thread_id, NULL);
+	pthread_join(g_logger->t_id, NULL);
 	pthread_mutex_destroy(&g_logger->mutex);
 	free(g_logger);
 }
@@ -68,7 +67,7 @@ t_logger	*get_logger(void)
 {
 	if (!g_logger)
 	{
-		if(!init_logger())
+		if (!init_logger())
 		{
 			write(0, "get_logger() Failed to init logger\n", 35);
 			return (NULL);
