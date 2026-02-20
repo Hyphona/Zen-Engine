@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_logger.c                                      :+:      :+:    :+:   */
+/*   init_game_logger.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:07:45 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 02:09:47 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 13:42:20 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static int	init_logger(void)
 
 	if (g_logger)
 	{
-		write(0, "init_logger() Seems to be already initialized'\n", 47);
+		log_w("init_logger() Seems to be already initialized");
 		return (1);
 	}
 	g_logger = malloc(sizeof(t_logger));
 	if (!g_logger)
 	{
-		write(0, "init_logger() Failed'\n", 22);
+		log_e("init_logger() Failed");
 		return (0);
 	}
 	pthread_mutex_init(&g_logger->mutex, NULL);
@@ -56,13 +56,29 @@ void	terminate_logger(void)
 {
 	if (!g_logger)
 	{
-		write(0, "terminate_logger() Seems to be already terminated\n", 50);
+		log_w("terminate_logger() Seems to be already terminated");
 		return ;
 	}
 	g_logger->stop_flag = 1;
 	pthread_join(g_logger->t_id, NULL);
 	pthread_mutex_destroy(&g_logger->mutex);
 	free(g_logger);
+}
+
+/**
+ * Check if 'g_logger' has been initialized
+ *
+ * Used by the engine logger, the goal is to avoid intializing it if the user
+ * doesn't use it
+ *
+ * @returns 1 if it has been initialized
+ * @returns 0 otherwise
+ */
+int	logger_exists(void)
+{
+	if (!g_logger)
+		return (0);
+	return (1);
 }
 
 /**
@@ -80,7 +96,7 @@ t_logger	*get_logger(void)
 	{
 		if (!init_logger())
 		{
-			write(0, "get_logger() Failed to init the logger\n", 39);
+			log_e("get_logger() Failed to init the logger");
 			return (NULL);
 		}
 	}

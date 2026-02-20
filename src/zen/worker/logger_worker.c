@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:18:06 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 12:16:06 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 13:24:37 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ static void	write_log(int fd, const char *log_line)
 
 	if (fd < 0)
 	{
-		write(0, "write_log() Invalid file descriptor 'fd'\n", 41);
+		log_e("write_log() Invalid file descriptor 'fd'");
 		return ;
 	}
 	if (!log_line)
 	{
-		write(0, "write_log() Null pointer 'log_line'\n", 36);
+		log_e("write_log() Null pointer 'log_line'");
 		return ;
 	}
 	written = write(fd, log_line, strlen(log_line));
 	if (written < 0)
-		write(0, "write_log() Failed\n", 19);
+		log_w("write_log() Failed");
+	write(fd, "\n", 1);
 }
 
 /**
@@ -52,8 +53,8 @@ static int	get_log_file(void)
 	fd = open("./game_logs.txt", O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
 	{
-		write(0, "get_log_file() Failed to open 'game_logs.txt'\n", 46);
-		write(0, "get_log_file() Logs will only be written to console\n", 52);
+		log_w("get_log_file() Failed to open 'game_logs.txt'");
+		log_w("get_log_file() Logs will only be written to console");
 		return (0);
 	}
 	return (fd);

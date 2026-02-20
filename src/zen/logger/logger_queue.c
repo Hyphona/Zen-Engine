@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 01:30:47 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 02:15:05 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 13:07:44 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ t_log_node	*create_log_node(char *msg)
 
 	if (!msg)
 	{
-		write(0, "create_log_node() Null pointer 'msg'\n", 37);
+		log_e("create_log_node() Null pointer 'msg'");
 		return (NULL);
 	}
 	new = malloc(sizeof(t_log_node));
 	if (!new)
 	{
-		write(0, "create_log_node() Failed\n", 25);
+		log_e("create_log_node() Failed");
 		return (NULL);
 	}
 	new->msg = msg;

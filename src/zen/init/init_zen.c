@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 00:35:44 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/19 13:43:27 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 13:11:36 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_zen	*init_zen(void)
 	zen = malloc(sizeof(t_zen));
 	if (!zen)
 	{
-		write(0, "init_zen(): Couldn't init Zen Engine\n", 37);
+		log_e("init_zen(): Couldn't init Zen Engine");
 		return (NULL);
 	}
 	zen->window = NULL;

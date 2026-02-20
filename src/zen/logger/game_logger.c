@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   logger.c                                           :+:      :+:    :+:   */
+/*   game_logger.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:24:35 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 12:17:13 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 13:42:24 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@
 static const char	*get_log_level(size_t log_level)
 {
 	if (log_level == 0)
-		return ("\nINFO - ");
+		return ("Game info: ");
 	if (log_level == 1)
-		return ("\nWARNING - ");
+		return ("Game warning: ");
 	if (log_level == 2)
-		return ("\nERROR - ");
-	write(0, "get_log_level() Unknow 'log_level' value\n", 41);
-	return ("\n??? - ");
+		return ("Game error: ");
+	return ("Game unknow: ");
 }
 
 /**
@@ -46,13 +45,13 @@ static char	*build_log_line(size_t log_level, const char *msg)
 
 	if (!msg)
 	{
-		write(0, "build_log_line() Null pointer 'msg'\n", 36);
+		log_e("build_log_line() Null pointer 'msg'");
 		return (NULL);
 	}
 	log_line = ft_strjoin(get_log_level(log_level), msg);
 	if (!log_line)
 	{
-		write(0, "build_log_line() Failed\n", 24);
+		log_e("build_log_line() Failed");
 		return (NULL);
 	}
 	return (log_line);
@@ -75,19 +74,21 @@ void	zen_log(size_t log_level, const char *msg)
 
 	if (!msg)
 	{
-		write(0, "zen_log() Null pointer 'msg'\n", 29);
+		log_e("zen_log() Null pointer 'msg'");
 		return ;
 	}
+	if (log_level > 2)
+		log_w("zen_log() Unknow 'log_level' value");
 	log_line = build_log_line(log_level, msg);
 	if (!log_line)
 	{
-		write(0, "zen_log() Failed to build the log line\n", 39);
+		log_e("zen_log() Failed to build the log line");
 		return ;
 	}
 	logger = get_logger();
 	if (!logger)
 	{
-		write(0, "zen_log() Failed to get the logger\n", 35);
+		log_e("zen_log() Failed to get the logger");
 		return ;
 	}
 	pthread_mutex_lock(&logger->mutex);
