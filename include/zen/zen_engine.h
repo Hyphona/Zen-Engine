@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 13:00:20 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 19:22:35 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 typedef struct log_node_s
 {
+	char				*lvl;
 	char				*msg;
 	struct log_node_s	*next;
 }						t_log_node;
@@ -38,12 +39,11 @@ void		terminate_logger(void);
 int			logger_exists(void);
 t_logger	*get_logger(void);
 void		*logger_worker(void *arg);
-t_log_node	*create_log_node(char *msg);
+t_log_node	*create_log_node(char *lvl, char *msg);
 void		add_to_log_queue(t_log_node **head, t_log_node *new);
 void		remove_from_log_queue(t_log_node **head);
 GLFWwindow	*create_window(int w, int h, char *t, int f_screen);
 void		destroy_window(GLFWwindow *window);
-char		*ft_strjoin(const char *s1, const char *s2);
 void		process_close_input(t_zen *zen);
 
 #endif

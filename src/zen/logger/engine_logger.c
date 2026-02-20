@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:39:41 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 13:41:40 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 14:15:18 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ static void	write_engine_log(const char *lvl, const char *str)
 		pthread_mutex_lock(&game_logger->mutex);
 	}
 	if (!lvl)
-		write(0, "Engine unknow: ", 15);
+		write(1, "Engine unknow: ", 15);
 	else
-		write(0, lvl, strlen(lvl));
+		write(1, lvl, strlen(lvl));
 	if (!str)
-		write(0, "(error) write_engine_log() Null pointer 'str'", 45);
+		write(1, "(error) write_engine_log() Null pointer 'str'", 45);
 	else
-		write(0, str, strlen(str));
-	write(0, "\n", 1);
+		write(1, str, strlen(str));
+	write(1, "\n", 1);
 	if (game_logger)
 		pthread_mutex_unlock(&game_logger->mutex);
 }
@@ -55,7 +55,7 @@ void	log_i(const char *str)
 {
 	if (!str)
 	{
-		write(0, "log_i() Null pointer 'str'\n", 27);
+		write(1, "log_i() Null pointer 'str'\n", 27);
 		return ;
 	}
 	write_engine_log("Engine info: ", str);
@@ -70,7 +70,7 @@ void	log_w(const char *str)
 {
 	if (!str)
 	{
-		write(0, "log_w() Null pointer 'str'\n", 27);
+		write(1, "log_w() Null pointer 'str'\n", 27);
 		return ;
 	}
 	write_engine_log("Engine warning: ", str);
@@ -85,7 +85,7 @@ void	log_e(const char *str)
 {
 	if (!str)
 	{
-		write(0, "log_e() Null pointer 'str'\n", 27);
+		write(1, "log_e() Null pointer 'str'\n", 27);
 		return ;
 	}
 	write_engine_log("Engine error: ", str);

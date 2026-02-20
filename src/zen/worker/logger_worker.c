@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:18:06 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 13:24:37 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 19:21:01 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,35 @@
  * This method won't 'close()' the file descriptor
  *
  * @param fd The file descriptor
- * @param log_line The log message
+ * @param lvl The log level as 'char *'
+ * @param msg The log message
  */
-static void	write_log(int fd, const char *log_line)
+static void	write_log(int fd, const char *lvl, const char *msg)
 {
-	ssize_t	written;
+	ssize_t	w_lvl;
+	ssize_t	w_msg;
 
-	if (fd < 0)
+	if (!fd || !lvl || !msg)
 	{
-		log_e("write_log() Invalid file descriptor 'fd'");
+		if (!fd)
+			log_e("write_log() Invalid file descriptor 'fd'");
+		if (!lvl)
+			log_e("write_log() Null pointer 'lvl'");
+		if (!msg)
+			log_e("write_log() Null pointer 'msg'");
 		return ;
 	}
-	if (!log_line)
+	w_lvl = write(fd, lvl, strlen(lvl));
+	if (w_lvl > 0)
+		w_msg = write(fd, msg, strlen(msg));
+	if (w_lvl < 0 || w_msg < 0)
 	{
-		log_e("write_log() Null pointer 'log_line'");
+		if (w_lvl < 0)
+			log_e("write_log() Couldn't write 'lvl'");
+		if (w_msg < 0)
+			log_e("write_log() Couldn't write 'msg'");
 		return ;
 	}
-	written = write(fd, log_line, strlen(log_line));
-	if (written < 0)
-		log_w("write_log() Failed");
 	write(fd, "\n", 1);
 }
 
@@ -80,8 +90,8 @@ void	*logger_worker(void *arg)
 			pthread_mutex_lock(&logger->mutex);
 			current = (t_log_node *) logger->head;
 			if (fd)
-				write_log(fd, current->msg);
-			write_log(0, current->msg);
+				write_log(fd, current->lvl, current->msg);
+			write_log(1, current->lvl, current->msg);
 			remove_from_log_queue(&logger->head);
 			pthread_mutex_unlock(&logger->mutex);
 		}

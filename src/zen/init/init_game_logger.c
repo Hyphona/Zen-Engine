@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:07:45 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 13:42:20 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 19:26:27 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	init_logger(void)
 	g_logger = malloc(sizeof(t_logger));
 	if (!g_logger)
 	{
-		log_e("init_logger() Failed");
+		log_e("init_logger() Failed to allocate memory");
 		return (0);
 	}
 	pthread_mutex_init(&g_logger->mutex, NULL);
@@ -43,7 +43,10 @@ static int	init_logger(void)
 	g_logger->stop_flag = 0;
 	t = pthread_create(&g_logger->t_id, NULL, logger_worker, (void *) g_logger);
 	if (t != 0)
+	{
+		log_e("init_logger() Failed to create the thread");
 		return (0);
+	}
 	return (1);
 }
 
@@ -92,13 +95,10 @@ int	logger_exists(void)
  */
 t_logger	*get_logger(void)
 {
-	if (!g_logger)
+	if (!g_logger && !init_logger())
 	{
-		if (!init_logger())
-		{
-			log_e("get_logger() Failed to init the logger");
-			return (NULL);
-		}
+		log_e("get_logger() Failed to init the logger");
+		return (NULL);
 	}
 	return (g_logger);
 }

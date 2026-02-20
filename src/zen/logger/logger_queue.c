@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 01:30:47 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 13:07:44 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 19:22:08 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 /**
  * Create a t_log_node structure that contain a pointer to the log message
  *
+ * @param lvl The log level as 'char *'
  * @param msg The log message
  * @returns On success, a pointer to a t_log_node structure
  * @returns On fail, a null pointer
  */
-t_log_node	*create_log_node(char *msg)
+t_log_node	*create_log_node(char *lvl, char *msg)
 {
 	t_log_node	*new;
 
@@ -31,9 +32,10 @@ t_log_node	*create_log_node(char *msg)
 	new = malloc(sizeof(t_log_node));
 	if (!new)
 	{
-		log_e("create_log_node() Failed");
+		log_e("create_log_node() Failed to allocate memory");
 		return (NULL);
 	}
+	new->lvl = lvl;
 	new->msg = msg;
 	new->next = NULL;
 	return (new);
@@ -63,7 +65,7 @@ void	add_to_log_queue(t_log_node **head, t_log_node *new)
 }
 
 /**
- * Remove the first node from the queue (all its content will be freed)
+ * Remove the first node from the queue
  *
  * This method always succeed
  *
@@ -75,7 +77,6 @@ void	remove_from_log_queue(t_log_node **head)
 
 	if (!*head)
 		return ;
-	free((*head)->msg);
 	tmp = *head;
 	*head = (*head)->next;
 	free(tmp);
