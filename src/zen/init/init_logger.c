@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:07:45 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 00:41:02 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 02:09:47 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 static t_logger	*g_logger;
 
 /**
- * Init a thread for the logger
+ * Create a thread for the logger
  *
- * The logger init automatically the first time zen_log() is called
+ * I believe the main thread should not wait for a log to be processed before
+ * continuing
  *
- * @return 1 on success, 0 if it fails
+ * @returns On success, 1
+ * @returns On fail, 0
  */
 static int	init_logger(void)
 {
@@ -28,7 +30,7 @@ static int	init_logger(void)
 	if (g_logger)
 	{
 		write(0, "init_logger() Seems to be already initialized'\n", 47);
-		return (0);
+		return (1);
 	}
 	g_logger = malloc(sizeof(t_logger));
 	if (!g_logger)
@@ -46,12 +48,17 @@ static int	init_logger(void)
 }
 
 /**
- * Wait for the logger thread and terminate it
+ * Send a stop flag to the logger thread & terminate it
+ *
+ * The logger will process the log queue before exiting
  */
 void	terminate_logger(void)
 {
 	if (!g_logger)
+	{
+		write(0, "terminate_logger() Seems to be already terminated\n", 50);
 		return ;
+	}
 	g_logger->stop_flag = 1;
 	pthread_join(g_logger->t_id, NULL);
 	pthread_mutex_destroy(&g_logger->mutex);
@@ -59,9 +66,13 @@ void	terminate_logger(void)
 }
 
 /**
- * Get the initialized logger or init one if no one exists
+ * Get an initialized t_logger structure
  *
- * @return a t_logger object
+ * If the logger has already been called before, returns the existing structure
+ * Otherwise, a new one will be initialized
+ *
+ * @returns On success, a pointer to a t_logger structure
+ * @returns On fail, a null pointer
  */
 t_logger	*get_logger(void)
 {
@@ -69,7 +80,7 @@ t_logger	*get_logger(void)
 	{
 		if (!init_logger())
 		{
-			write(0, "get_logger() Failed to init logger\n", 35);
+			write(0, "get_logger() Failed to init the logger\n", 39);
 			return (NULL);
 		}
 	}

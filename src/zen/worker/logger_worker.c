@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:18:06 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/19 21:09:42 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 12:16:06 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,48 @@
 /**
  * Write a log message to the provided file descriptor
  *
+ * This method won't 'close()' the file descriptor
+ *
  * @param fd The file descriptor
  * @param log_line The log message
  */
 static void	write_log(int fd, const char *log_line)
 {
+	ssize_t	written;
+
 	if (fd < 0)
+	{
+		write(0, "write_log() Invalid file descriptor 'fd'\n", 41);
 		return ;
+	}
 	if (!log_line)
+	{
+		write(0, "write_log() Null pointer 'log_line'\n", 36);
 		return ;
-	write(fd, log_line, strlen(log_line));
+	}
+	written = write(fd, log_line, strlen(log_line));
+	if (written < 0)
+		write(0, "write_log() Failed\n", 19);
+}
+
+/**
+ * Open the 'game_logs.txt' file
+ *
+ * @returns On success, return a file descriptor (int > 0)
+ * @returns On fail, return 0
+ */
+static int	get_log_file(void)
+{
+	int	fd;
+
+	fd = open("./game_logs.txt", O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (fd < 0)
+	{
+		write(0, "get_log_file() Failed to open 'game_logs.txt'\n", 46);
+		write(0, "get_log_file() Logs will only be written to console\n", 52);
+		return (0);
+	}
+	return (fd);
 }
 
 /**
@@ -39,24 +71,24 @@ void	*logger_worker(void *arg)
 	int			fd;
 
 	logger = (t_logger *) arg;
-	fd = open("./zen_engine_logs.txt", O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (fd < 0)
-		return ((void *) write(0, "logger_worker() Failed\n", 23));
+	fd = get_log_file();
 	while (1)
 	{
 		if (logger->head)
 		{
 			pthread_mutex_lock(&logger->mutex);
 			current = (t_log_node *) logger->head;
-			write_log(fd, current->msg);
+			if (fd)
+				write_log(fd, current->msg);
 			write_log(0, current->msg);
 			remove_from_log_queue(&logger->head);
 			pthread_mutex_unlock(&logger->mutex);
 		}
 		if (logger->stop_flag == 1 && !logger->head)
 			break ;
-		usleep(1000);
+		usleep(10000);
 	}
-	close(fd);
+	if (fd)
+		close(fd);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 00:41:13 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/20 02:09:17 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void		*logger_worker(void *arg);
 t_log_node	*create_log_node(char *msg);
 void		add_to_log_queue(t_log_node **head, t_log_node *new);
 void		remove_from_log_queue(t_log_node **head);
-char		*build_log_line(size_t log_level, const char *msg);
 GLFWwindow	*create_window(int w, int h, char *t, int f_screen);
 void		destroy_window(GLFWwindow *window);
 char		*ft_strjoin(const char *s1, const char *s2);
