@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:24:35 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 19:25:05 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/21 15:37:34 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ static char	*get_log_level(size_t log_level)
 /**
  * Log a message to the console / game_logs.txt
  *
- * When calling this method for the first time, a new thread will be created
- * For each following call, the log message will be stored in a queue waiting
- * for the thread to process it
+ * Lazy load the logger when this function is called for the first time
  *
  * @param log_level The log level - (0) info, (1) warning, (2) error
  * @param msg The log message
@@ -51,7 +49,7 @@ void	zen_log(size_t log_level, char *msg)
 		log_e("zen_log() Null pointer 'msg'");
 		return ;
 	}
-	logger = get_logger();
+	logger = get_logger(1);
 	if (!logger)
 	{
 		log_e("zen_log() Failed to get the logger");

@@ -6,59 +6,30 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:39:41 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 14:15:18 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/21 15:30:14 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen/zen_engine.h"
 
 /**
- * The method that actually write the engine logs
- *
- * It first check if the user initialized the 't_logger' thread to avoid
- * initializing it by calling 'get_logger()'
- *
- * Mutex will be used if 't_logger' has been initialized
- *
- * @param lvl The log level
- * @param str The log message
- */
-static void	write_engine_log(const char *lvl, const char *str)
-{
-	t_logger	*game_logger;
-
-	game_logger = NULL;
-	if (logger_exists())
-	{
-		game_logger = get_logger();
-		pthread_mutex_lock(&game_logger->mutex);
-	}
-	if (!lvl)
-		write(1, "Engine unknow: ", 15);
-	else
-		write(1, lvl, strlen(lvl));
-	if (!str)
-		write(1, "(error) write_engine_log() Null pointer 'str'", 45);
-	else
-		write(1, str, strlen(str));
-	write(1, "\n", 1);
-	if (game_logger)
-		pthread_mutex_unlock(&game_logger->mutex);
-}
-
-/**
  * Log an engine information
  *
  * @param str The log message
  */
-void	log_i(const char *str)
+void	log_i(char *msg)
 {
-	if (!str)
+	t_logger	*logger;
+
+	if (!msg)
 	{
-		write(1, "log_i() Null pointer 'str'\n", 27);
+		write(1, "log_i() Null pointer 'msg'\n", 27);
 		return ;
 	}
-	write_engine_log("Engine info: ", str);
+	logger = get_logger(1);
+	pthread_mutex_lock(&logger->mutex);
+	add_to_log_queue(&logger->head, create_log_node("Engine info: ", msg));
+	pthread_mutex_unlock(&logger->mutex);
 }
 
 /**
@@ -66,14 +37,19 @@ void	log_i(const char *str)
  *
  * @param str The log message
  */
-void	log_w(const char *str)
+void	log_w(char *msg)
 {
-	if (!str)
+	t_logger	*logger;
+
+	if (!msg)
 	{
 		write(1, "log_w() Null pointer 'str'\n", 27);
 		return ;
 	}
-	write_engine_log("Engine warning: ", str);
+	logger = get_logger(1);
+	pthread_mutex_lock(&logger->mutex);
+	add_to_log_queue(&logger->head, create_log_node("Engine warning: ", msg));
+	pthread_mutex_unlock(&logger->mutex);
 }
 
 /**
@@ -81,12 +57,17 @@ void	log_w(const char *str)
  *
  * @param str The log message
  */
-void	log_e(const char *str)
+void	log_e(char *msg)
 {
-	if (!str)
+	t_logger	*logger;
+
+	if (!msg)
 	{
 		write(1, "log_e() Null pointer 'str'\n", 27);
 		return ;
 	}
-	write_engine_log("Engine error: ", str);
+	logger = get_logger(1);
+	pthread_mutex_lock(&logger->mutex);
+	add_to_log_queue(&logger->head, create_log_node("Engine error: ", msg));
+	pthread_mutex_unlock(&logger->mutex);
 }

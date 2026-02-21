@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 19:22:35 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/21 15:29:35 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef struct logger_s
 	_Atomic int			stop_flag;
 }						t_logger;
 
-void		log_i(const char *str);
-void		log_w(const char *str);
-void		log_e(const char *str);
+void		log_i(char *str);
+void		log_w(char *str);
+void		log_e(char *str);
 void		terminate_logger(void);
 int			logger_exists(void);
-t_logger	*get_logger(void);
+t_logger	*get_logger(int init);
 void		*logger_worker(void *arg);
 t_log_node	*create_log_node(char *lvl, char *msg);
 void		add_to_log_queue(t_log_node **head, t_log_node *new);
