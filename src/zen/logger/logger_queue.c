@@ -6,18 +6,18 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 01:30:47 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 19:22:08 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/22 01:03:00 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen/zen_engine.h"
 
 /**
- * Create a t_log_node structure that contain a pointer to the log message
+ * Create a 't_log_node' struct
  *
  * @param lvl The log level as 'char *'
  * @param msg The log message
- * @returns On success, a pointer to a t_log_node structure
+ * @returns On success, a pointer to a 't_log_node' struc
  * @returns On fail, a null pointer
  */
 t_log_node	*create_log_node(char *lvl, char *msg)
@@ -42,12 +42,12 @@ t_log_node	*create_log_node(char *lvl, char *msg)
 }
 
 /**
- * Add a t_log_node structure to the queue
+ * Add a 't_log_node' struct to the queue
  *
  * This method always succeed
  *
  * @param head The address of the first node of queue
- * @param new A pointer to the new t_log_node structure entry
+ * @param new A pointer to the new 't_log_node' struct entry
  */
 void	add_to_log_queue(t_log_node **head, t_log_node *new)
 {

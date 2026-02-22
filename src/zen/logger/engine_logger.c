@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:39:41 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/21 15:30:14 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/22 01:25:43 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	log_i(char *msg)
 		return ;
 	}
 	logger = get_logger(1);
+	if (!logger)
+	{
+		write(1, "log_i() Failed to get the logger\n", 33);
+		return ;
+	}
 	pthread_mutex_lock(&logger->mutex);
 	add_to_log_queue(&logger->head, create_log_node("Engine info: ", msg));
 	pthread_mutex_unlock(&logger->mutex);
@@ -47,6 +52,11 @@ void	log_w(char *msg)
 		return ;
 	}
 	logger = get_logger(1);
+	if (!logger)
+	{
+		write(1, "log_w() Failed to get the logger\n", 33);
+		return ;
+	}
 	pthread_mutex_lock(&logger->mutex);
 	add_to_log_queue(&logger->head, create_log_node("Engine warning: ", msg));
 	pthread_mutex_unlock(&logger->mutex);
@@ -67,6 +77,11 @@ void	log_e(char *msg)
 		return ;
 	}
 	logger = get_logger(1);
+	if (!logger)
+	{
+		write(1, "log_e() Failed to get the logger\n", 33);
+		return ;
+	}
 	pthread_mutex_lock(&logger->mutex);
 	add_to_log_queue(&logger->head, create_log_node("Engine error: ", msg));
 	pthread_mutex_unlock(&logger->mutex);

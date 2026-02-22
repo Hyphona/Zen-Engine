@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_input.c                                      :+:      :+:    :+:   */
+/*   terminate_logger.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 00:31:50 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/16 01:24:05 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/22 00:59:43 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/22 01:06:45 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen/zen_engine.h"
 
 /**
- * Tell the window that it should close when the close key is pressed
+ * Set the 'stop_flag' to 1 & terminate the logger thread
  *
- * @param zen The t_zen struct
+ * The logger will process the log queue before exiting
  */
-void	process_close_input(t_zen *zen)
+void	terminate_logger(void)
 {
-	if (glfwGetKey(zen->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(zen->window, true);
+	t_logger	*logger;
+
+	logger = get_logger(0);
+	if (!logger)
+	{
+		log_w("terminate_logger() Logger seems to be already terminated");
+		return ;
+	}
+	logger->stop_flag = 1;
+	pthread_join(logger->t_id, NULL);
+	pthread_mutex_destroy(&logger->mutex);
+	free(logger);
 }

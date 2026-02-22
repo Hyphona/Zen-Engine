@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:24:35 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/21 15:37:34 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/22 01:27:53 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	zen_log(size_t log_level, char *msg)
 
 	if (!msg)
 	{
-		log_e("zen_log() Null pointer 'msg'");
+		write(1, "zen_log() Null pointer 'msg'\n", 29);
 		return ;
 	}
 	logger = get_logger(1);
 	if (!logger)
 	{
-		log_e("zen_log() Failed to get the logger");
+		write(1, "zen_log() Failed to get the logger\n", 35);
 		return ;
 	}
 	if (log_level > 2)

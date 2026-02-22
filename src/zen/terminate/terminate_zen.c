@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_zen.c                                         :+:      :+:    :+:   */
+/*   terminate_zen.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/19 00:35:44 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 13:11:36 by Hyphona          ###   ########.fr       */
+/*   Created: 2026/02/14 13:49:30 by Hyphona           #+#    #+#             */
+/*   Updated: 2026/02/22 01:30:03 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zen/zen_engine.h"
 
 /**
- * Init Zen Engine
- *
- * @returns A pointer to the t_zen structure
- * @returns An empty pointer if it fails
+ * Terminate Zen Engine
  */
-t_zen	*init_zen(void)
+void	terminate_zen(void)
 {
-	t_zen	*zen;
-
-	zen = malloc(sizeof(t_zen));
-	if (!zen)
-	{
-		log_e("init_zen(): Couldn't init Zen Engine");
-		return (NULL);
-	}
-	zen->window = NULL;
-	return (zen);
+	terminate_logger();
 }

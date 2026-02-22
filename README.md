@@ -4,6 +4,8 @@
 
 - [x] Logger
 	- Still need some improvments, but the base is here
+	- [x] Game logger
+	- [x] Engine logger
 - [ ] Implement SDL2
 - [ ] Implement Vulkan
 
