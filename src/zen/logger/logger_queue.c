@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 01:30:47 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/23 13:23:22 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 17:04:51 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  *
  * @param head The address of the pointer to the first node of the queue
  */
-static void	remove_from_log_queue(t_log_node **head)
+static void	update_log_queue(t_log_node **head)
 {
 	if (!*head)
 		return ;
@@ -40,7 +40,7 @@ t_log_node	*create_log_node(char *lvl, char *msg)
 
 	if (!msg)
 	{
-		write(1, "create_log_node() Null pointer 'msg'\n", 37);
+		log_e("create_log_node() Null pointer 'msg'");
 		return (NULL);
 	}
 	new = malloc(sizeof(t_log_node));
@@ -94,6 +94,6 @@ t_log_node	*pop_from_log_queue(t_log_node **head)
 	if (!*head)
 		return (NULL);
 	node = *head;
-	remove_from_log_queue(head);
+	update_log_queue(head);
 	return (node);
 }

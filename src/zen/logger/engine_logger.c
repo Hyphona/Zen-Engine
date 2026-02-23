@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:39:41 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/23 13:33:34 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 17:03:07 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	engine_logger(size_t log_level, char *msg)
 
 	if (!msg)
 	{
-		write(1, "engine_logger() Null pointer 'msg'\n", 35);
+		log_e("engine_logger() Null pointer 'msg'");
 		return ;
 	}
 	logger = get_logger(1);
@@ -74,7 +74,7 @@ void	log_i(char *msg)
 {
 	if (!msg)
 	{
-		write(1, "log_i() Null pointer 'msg'\n", 27);
+		log_e("log_i() Null pointer 'msg'");
 		return ;
 	}
 	engine_logger(0, msg);
@@ -89,7 +89,7 @@ void	log_w(char *msg)
 {
 	if (!msg)
 	{
-		write(1, "log_w() Null pointer 'str'\n", 27);
+		log_e("log_w() Null pointer 'str'");
 		return ;
 	}
 	engine_logger(1, msg);
@@ -104,7 +104,7 @@ void	log_e(char *msg)
 {
 	if (!msg)
 	{
-		write(1, "log_e() Null pointer 'str'\n", 27);
+		log_e("log_e() Null pointer 'str'");
 		return ;
 	}
 	engine_logger(2, msg);
