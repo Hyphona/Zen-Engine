@@ -3,9 +3,9 @@
 **Zen Engine** aims to be an easy to use Linux game engine wrote in C, currently in **very early development**
 
 - [x] Logger
-	- Still need some improvments, but the base is here
-	- [x] Game logger
-	- [x] Engine logger
+	- [x] Threaded logs processing (queue)
+	- [x] Engine reserved logging functions
+	- [x] Game reserved logging function
 - [ ] Implement SDL2
 - [ ] Implement Vulkan
 
@@ -22,4 +22,4 @@ The code should respect the 42 standard (norm) available [here](https://github.c
 The ```./norm.sh``` script can be used to check that the project respect the norm
 
 ## 💬 Discussions
-Feel free to use the [discussions](https://github.com/Hyphona/Zen-Engine/discussions) tab if you are interested in the project / have any recommendation, pull requests will be open when the project will be mature enough
+Feel free to use the [discussions](https://github.com/Hyphona/Zen-Engine/discussions) tab if you are interested in the project / have any recommendation
