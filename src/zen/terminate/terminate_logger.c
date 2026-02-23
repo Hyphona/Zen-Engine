@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 00:59:43 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/22 01:06:45 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 13:28:03 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void	terminate_logger(void)
 	logger = get_logger(0);
 	if (!logger)
 	{
-		log_w("terminate_logger() Logger seems to be already terminated");
+		write(1, "terminate_logger() Logger seems already terminated\n", 51);
 		return ;
 	}
 	logger->stop_flag = 1;
+	pthread_cond_signal(&logger->cond);
 	pthread_join(logger->t_id, NULL);
 	pthread_mutex_destroy(&logger->mutex);
+	pthread_cond_destroy(&logger->cond);
 	free(logger);
 }

@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:18:06 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/20 19:21:01 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 13:35:11 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ static int	get_log_file(void)
 }
 
 /**
- * The method that actually listen to the log queue
+ * Process the log queue
  *
+ * The thread sleeps until a wake up signal is sent (avoid busy waiting)
  * Check for a stop flag, but only stop when the queue is cleared
  */
 void	*logger_worker(void *arg)
@@ -85,19 +86,17 @@ void	*logger_worker(void *arg)
 	fd = get_log_file();
 	while (1)
 	{
-		if (logger->head)
-		{
-			pthread_mutex_lock(&logger->mutex);
-			current = (t_log_node *) logger->head;
-			if (fd)
-				write_log(fd, current->lvl, current->msg);
-			write_log(1, current->lvl, current->msg);
-			remove_from_log_queue(&logger->head);
-			pthread_mutex_unlock(&logger->mutex);
-		}
-		if (logger->stop_flag == 1 && !logger->head)
+		pthread_mutex_lock(&logger->mutex);
+		while (!logger->head && !logger->stop_flag)
+			pthread_cond_wait(&logger->cond, &logger->mutex);
+		if (logger->stop_flag && !logger->head)
 			break ;
-		usleep(10000);
+		current = pop_from_log_queue(&logger->head);
+		pthread_mutex_unlock(&logger->mutex);
+		if (fd)
+			write_log(fd, current->lvl, current->msg);
+		write_log(1, current->lvl, current->msg);
+		free(current);
 	}
 	if (fd)
 		close(fd);

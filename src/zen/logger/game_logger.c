@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:24:35 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/22 01:27:53 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 12:31:31 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
  */
 static char	*get_log_level(size_t log_level)
 {
+	if (log_level > 2)
+		log_w("zen_log() Unknow 'log_level' value");
 	if (log_level == 0)
 		return ("Game info: ");
-	if (log_level == 1)
+	else if (log_level == 1)
 		return ("Game warning: ");
-	if (log_level == 2)
+	else if (log_level == 2)
 		return ("Game error: ");
 	return ("Game unknow: ");
 }
@@ -41,8 +43,8 @@ static char	*get_log_level(size_t log_level)
  */
 void	zen_log(size_t log_level, char *msg)
 {
-	char		*lvl;
 	t_logger	*logger;
+	t_log_node	*node;
 
 	if (!msg)
 	{
@@ -55,10 +57,14 @@ void	zen_log(size_t log_level, char *msg)
 		write(1, "zen_log() Failed to get the logger\n", 35);
 		return ;
 	}
-	if (log_level > 2)
-		log_w("zen_log() Unknow 'log_level' value");
-	lvl = get_log_level(log_level);
+	node = create_log_node(get_log_level(log_level), msg);
+	if (!node)
+	{
+		write(1, "zen_log() Failed to create node\n", 32);
+		return ;
+	}
 	pthread_mutex_lock(&logger->mutex);
-	add_to_log_queue(&logger->head, create_log_node(lvl, msg));
+	add_to_log_queue(&logger->head, node);
+	pthread_cond_signal(&logger->cond);
 	pthread_mutex_unlock(&logger->mutex);
 }

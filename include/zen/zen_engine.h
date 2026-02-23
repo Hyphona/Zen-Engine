@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 12:41:14 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/22 00:56:24 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 12:46:14 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct logger_s
 {
 	pthread_mutex_t		mutex;
 	pthread_t			t_id;
+	pthread_cond_t		cond;
 	struct log_node_s	*head;
 	_Atomic int			stop_flag;
 }						t_logger;
@@ -40,6 +41,6 @@ t_logger	*get_logger(int init);
 void		*logger_worker(void *arg);
 t_log_node	*create_log_node(char *lvl, char *msg);
 void		add_to_log_queue(t_log_node **head, t_log_node *new);
-void		remove_from_log_queue(t_log_node **head);
+t_log_node	*pop_from_log_queue(t_log_node **head);
 
 #endif

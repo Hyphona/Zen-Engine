@@ -6,7 +6,7 @@
 /*   By: Hyphona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 23:07:45 by Hyphona           #+#    #+#             */
-/*   Updated: 2026/02/22 01:24:06 by Hyphona          ###   ########.fr       */
+/*   Updated: 2026/02/23 12:49:06 by Hyphona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static t_logger	*init_logger(t_logger *logger)
 		return (NULL);
 	}
 	pthread_mutex_init(&logger->mutex, NULL);
+	pthread_cond_init(&logger->cond, NULL);
 	logger->head = NULL;
 	logger->stop_flag = 0;
 	t = pthread_create(&logger->t_id, NULL, logger_worker, (void *) logger);
